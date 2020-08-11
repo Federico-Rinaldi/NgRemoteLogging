@@ -1,27 +1,75 @@
-# FrLibrary
+# NgRemoteLogging
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-## Development server
+NgRemoteLogging is an Angular library to simplify the management of the frontend logs.  
+Through this library it's possible to catch and save all frontend errors to your backend application.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# New Features!
 
-## Code scaffolding
+  - Release Beta 0.0.1 - this is an Experimental version, more features coming..
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Installation
 
-## Build
+NgRemoteLogging requires [Angular](https://angular.io/) v8+ to run.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Install with npm in your project and start the server.
 
-## Running unit tests
+```sh
+$ cd projectdir
+$ npm install ng-remote-logging
+$ ng serve
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To install and configure in your project
+in ***app.module.ts*** : 
+```ts
+import {NgRemoteLoggingModule} from 'ng-remote-logging';
 
-## Running end-to-end tests
+imports: [
+    NgRemoteLoggingModule
+]
+```
+In your ***component*** inject the service and create configuration object :
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```ts
+import { NgRemoteLoggingConfigurator, CallTypes, NgRemoteLoggingService } from 'ng-remote-logging';
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+constructor(
+    private remoteLog:NgRemoteLoggingService
+)
+
+public sampleFunction(){
+       const obj:NgRemoteLoggingConfigurator = new NgRemoteLoggingConfigurator();
+       obj.callType = CallTypes.POST;
+       obj.messageToLog = 'TEST ERROR MESSAGE';
+       obj.serviceUrl = `http://yourserver:5000/saveErrorMessage`;
+       this.remoteLog.connectToServer(obj).subscribe(res=>{
+         console.log(res);
+         //res is a NgRemoteLoggingConfigurator response object
+   });
+}
+```
+
+#### Info, feedback and hints
+
+Contact me [Federico Rinaldi](mailto://info@federicorinaldi.com)
+
+
+#### Advice
+This version is Beta and unstable, take care in your production projects.
+First stable release soon!
+
+
+### Todos
+
+ - More features
+
+License
+----
+
+[![GPLv3](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl-3.0.html)
+
+
+**Free Software, Hell Yeah!**
